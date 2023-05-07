@@ -4,7 +4,6 @@ import com.celinski.weatherapp.data.api.WeatherApi
 import com.celinski.weatherapp.data.mappers.toWeatherInfo
 import com.celinski.weatherapp.domain.repository.WeatherRepository
 import com.celinski.weatherapp.domain.util.Resource
-import com.celinski.weatherapp.domain.weather.WeatherModel
 import com.celinski.weatherapp.domain.weather.WeatherMultipleModel
 import java.lang.Exception
 import javax.inject.Inject
