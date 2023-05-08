@@ -50,6 +50,7 @@ class DefaultLocationTracker @Inject constructor(
                     }
                     return@suspendCancellableCoroutine
                 }
+                //oczekiwanie na pobranie lokalizacji
                 addOnSuccessListener {
                     cont.resume(it)
                 }
