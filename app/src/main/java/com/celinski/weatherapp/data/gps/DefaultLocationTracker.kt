@@ -18,7 +18,7 @@ class DefaultLocationTracker @Inject constructor(
     private val application: Application
 ) : LocationTracker {
 
-    override suspend fun gerCurrentLocation(): Location? {
+    override suspend fun getCurrentLocation(): Location? {
         //sprawdzenie posiadanych uprawnien do gps przez aplikacje
         val hasAccessFineLocationPermission = ContextCompat.checkSelfPermission(
             application,
