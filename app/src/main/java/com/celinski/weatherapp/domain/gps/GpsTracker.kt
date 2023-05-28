@@ -2,6 +2,6 @@ package com.celinski.weatherapp.domain.gps
 
 import android.location.Location
 
-interface LocationTracker {
+interface GpsTracker {
     suspend fun getCurrentLocation(): Location?
 }

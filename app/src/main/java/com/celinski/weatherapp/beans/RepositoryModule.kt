@@ -1,4 +1,4 @@
-package com.celinski.weatherapp.dependencyInjection
+package com.celinski.weatherapp.beans
 
 import com.celinski.weatherapp.data.repository.WeatherRepositoryImpl
 import com.celinski.weatherapp.domain.repository.WeatherRepository

@@ -1,4 +1,4 @@
-package com.celinski.weatherapp.domain.weather
+package com.celinski.weatherapp.domain.entity
 
 import java.time.LocalDateTime
 

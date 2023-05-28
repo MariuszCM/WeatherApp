@@ -1,4 +1,4 @@
-package com.celinski.weatherapp.dependencyInjection
+package com.celinski.weatherapp.beans
 
 import android.app.Application
 import com.celinski.weatherapp.data.api.WeatherApi

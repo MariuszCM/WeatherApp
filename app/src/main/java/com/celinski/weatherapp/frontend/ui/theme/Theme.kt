@@ -1,4 +1,4 @@
-package com.celinski.weatherapp.presentation.ui.theme
+package com.celinski.weatherapp.frontend.ui.theme
 
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable

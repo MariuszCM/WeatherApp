@@ -1,4 +1,4 @@
-package com.celinski.weatherapp.domain.weather
+package com.celinski.weatherapp.domain.entity
 
 import androidx.annotation.DrawableRes
 import com.celinski.weatherapp.R

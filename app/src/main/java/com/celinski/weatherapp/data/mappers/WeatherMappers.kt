@@ -2,9 +2,9 @@ package com.celinski.weatherapp.data.mappers
 
 import com.celinski.weatherapp.data.api.WeatherDataDto
 import com.celinski.weatherapp.data.api.WeatherDto
-import com.celinski.weatherapp.domain.weather.WeatherModel
-import com.celinski.weatherapp.domain.weather.WeatherMultipleModel
-import com.celinski.weatherapp.domain.weather.WeatherType
+import com.celinski.weatherapp.domain.entity.WeatherModel
+import com.celinski.weatherapp.domain.entity.WeatherMultipleModel
+import com.celinski.weatherapp.domain.entity.WeatherType
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
