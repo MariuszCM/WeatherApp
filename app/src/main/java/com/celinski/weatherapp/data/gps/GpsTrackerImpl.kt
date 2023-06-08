@@ -15,7 +15,7 @@ import kotlin.coroutines.resume
 
 class GpsTrackerImpl @Inject constructor(
     private val locationClient: FusedLocationProviderClient,
-    private val application: Application
+    private val application: Application,
 ) : GpsTracker {
 
     override suspend fun getCurrentLocation(): Location? {

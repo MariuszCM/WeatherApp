@@ -3,6 +3,7 @@ package com.celinski.weatherapp.data.api
 import com.squareup.moshi.Json
 
 data class WeatherDataDto(
+    @field:Json(name = "time")
     val timeList: List<String>,
     @field:Json(name = "temperature_2m")
     val temperatures: List<Double>,
