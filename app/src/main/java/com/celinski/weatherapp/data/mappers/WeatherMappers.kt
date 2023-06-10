@@ -50,6 +50,7 @@ fun WeatherDto.toWeatherInfo(city: String): WeatherMultipleModel {
     return WeatherMultipleModel(
         weatherModelPerDay = weatherDataMap,
         currentWeatherModel = currentWeatherData,
-        city = city
+        city = city,
+        cacheTime = now
     )
 }
