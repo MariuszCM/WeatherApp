@@ -4,5 +4,5 @@ import com.celinski.weatherapp.domain.util.Helper
 import com.celinski.weatherapp.domain.entity.WeatherMultipleModel
 
 interface WeatherRepository {
-    suspend fun getWeatherMultipleModel(lat: Double, long: Double): Helper<WeatherMultipleModel>
+    suspend fun getWeatherMultipleModel(lat: Double, long: Double, city: String): Helper<WeatherMultipleModel>
 }

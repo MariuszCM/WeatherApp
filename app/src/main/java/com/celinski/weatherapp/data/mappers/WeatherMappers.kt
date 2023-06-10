@@ -40,7 +40,7 @@ fun WeatherDataDto.toWeatherDataMap(): Map<Int, List<WeatherModel>> {
     }
 }
 
-fun WeatherDto.toWeatherInfo(): WeatherMultipleModel {
+fun WeatherDto.toWeatherInfo(city: String): WeatherMultipleModel {
     val weatherDataMap = weatherData.toWeatherDataMap()
     val now = LocalDateTime.now()
     val currentWeatherData = weatherDataMap[0]?.find {
@@ -49,6 +49,7 @@ fun WeatherDto.toWeatherInfo(): WeatherMultipleModel {
     }
     return WeatherMultipleModel(
         weatherModelPerDay = weatherDataMap,
-        currentWeatherModel = currentWeatherData
+        currentWeatherModel = currentWeatherData,
+        city = city
     )
 }

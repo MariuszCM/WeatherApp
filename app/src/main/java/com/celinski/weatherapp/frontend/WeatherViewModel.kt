@@ -1,7 +1,6 @@
 package com.celinski.weatherapp.frontend
 
 import android.content.Context
-import android.location.Address
 import android.location.Geocoder
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -34,10 +33,12 @@ class WeatherViewModel @Inject constructor(
                 error = null
             )
             gpsTracker.getCurrentLocation()?.let { location ->
-                when (val result = repository.getWeatherMultipleModel(location.latitude, location.longitude)) {
+                val geocoder = Geocoder(context, Locale.getDefault())
+                val cityGeocoder = geocoder.getFromLocation(location.latitude, location.longitude, 1).get(0).locality
+
+                when (val result = repository.getWeatherMultipleModel(location.latitude, location.longitude, cityGeocoder)) {
                     is Helper.Success -> {
-                        val geocoder = Geocoder(context, Locale.getDefault())
-                        state = state.copy(weatherMultipleModel = result.data, isLoading = false, error = null,  city = geocoder.getFromLocation(location.latitude, location.longitude, 1).get(0).locality)
+                        state = state.copy(weatherMultipleModel = result.data, isLoading = false, error = null,  city = cityGeocoder)
                     }
 
                     is Helper.Error -> {
