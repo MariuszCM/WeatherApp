@@ -32,7 +32,6 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.celinski.weatherapp.R
-import com.celinski.weatherapp.data.repository.WeatherRepositoryImpl
 import com.celinski.weatherapp.frontend.ui.theme.DarkGreen
 import com.celinski.weatherapp.frontend.ui.theme.DeepGreen
 import com.celinski.weatherapp.frontend.ui.theme.WeatherAppTheme
@@ -50,10 +49,12 @@ class MainActivity : ComponentActivity() {
         ) {
             viewModel.loadWeatherInfo()
         }
-        permissionLauncher.launch(arrayOf(
-            Manifest.permission.ACCESS_FINE_LOCATION,
-            Manifest.permission.ACCESS_COARSE_LOCATION,
-        ))
+        permissionLauncher.launch(
+            arrayOf(
+                Manifest.permission.ACCESS_FINE_LOCATION,
+                Manifest.permission.ACCESS_COARSE_LOCATION,
+            )
+        )
         setContent {
             WeatherAppTheme {
                 Box(modifier = Modifier.fillMaxSize()) {

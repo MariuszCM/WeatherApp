@@ -34,15 +34,30 @@ class WeatherViewModel @Inject constructor(
             )
             gpsTracker.getCurrentLocation()?.let { location ->
                 val geocoder = Geocoder(context, Locale.getDefault())
-                val cityGeocoder = geocoder.getFromLocation(location.latitude, location.longitude, 1).get(0).locality
+                val cityGeocoder =
+                    geocoder.getFromLocation(location.latitude, location.longitude, 1)
+                        .get(0).locality
 
-                when (val result = repository.getWeatherMultipleModel(location.latitude, location.longitude, cityGeocoder)) {
+                when (val result = repository.getWeatherMultipleModel(
+                    location.latitude,
+                    location.longitude,
+                    cityGeocoder
+                )) {
                     is Helper.Success -> {
-                        state = state.copy(weatherMultipleModel = result.data, isLoading = false, error = null,  city = cityGeocoder)
+                        state = state.copy(
+                            weatherMultipleModel = result.data,
+                            isLoading = false,
+                            error = null,
+                            city = cityGeocoder
+                        )
                     }
 
                     is Helper.Error -> {
-                        state = state.copy(weatherMultipleModel = null, isLoading = false, error = result.message)
+                        state = state.copy(
+                            weatherMultipleModel = null,
+                            isLoading = false,
+                            error = result.message
+                        )
                     }
                 }
             } ?: kotlin.run {

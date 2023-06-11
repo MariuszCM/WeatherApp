@@ -2,7 +2,6 @@ package com.celinski.weatherapp.domain.entity
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import org.jetbrains.annotations.NotNull
 import java.time.LocalDateTime
 
 @Entity(tableName = "weather_model")

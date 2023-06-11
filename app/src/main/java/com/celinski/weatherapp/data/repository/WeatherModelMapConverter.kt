@@ -10,33 +10,6 @@ import com.google.gson.reflect.TypeToken
 import java.lang.reflect.Type
 
 class WeatherModelMapConverter {
-//    @TypeConverter
-//    fun fromWeatherModelMap(value: Map<Int, List<WeatherModel>>): String {
-//        val gson = Gson()
-//        val type = object : TypeToken<Map<Int, List<WeatherModel>>>() {}.type
-//        return gson.toJson(value, type)
-//    }
-//
-//    @TypeConverter
-//    fun toWeatherModelMap(value: String): Map<Int, List<WeatherModel>> {
-//        val gson = Gson()
-//        val type = object : TypeToken<Map<Int, List<WeatherModel>>>() {}.type
-//        return gson.fromJson(value, type)
-//    }
-//
-//    @TypeConverter
-//    fun fromListWeatherModel(value: List<WeatherModel>): String {
-//        val gson = Gson()
-//        return gson.toJson(value)
-//    }
-//
-//    @TypeConverter
-//    fun toListWeatherModel(value: String): List<WeatherModel> {
-//        val gson = Gson()
-//        val type = object : TypeToken<List<WeatherModel>>() {}.type
-//        return gson.fromJson(value, type)
-//    }
-
 
     private val gson: Gson = GsonBuilder()
         .registerTypeAdapter(WeatherType::class.java, WeatherTypeInstanceCreator())

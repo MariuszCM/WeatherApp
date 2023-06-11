@@ -3,7 +3,6 @@ package com.celinski.weatherapp.data.repository
 import androidx.room.TypeConverter
 import com.celinski.weatherapp.domain.entity.WeatherModel
 import com.celinski.weatherapp.domain.entity.WeatherType
-import com.google.gson.reflect.TypeToken
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.google.gson.InstanceCreator

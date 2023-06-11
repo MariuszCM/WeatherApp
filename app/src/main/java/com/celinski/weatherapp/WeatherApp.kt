@@ -1,7 +1,6 @@
 package com.celinski.weatherapp
 
 import android.app.Application
-import android.content.Context
 import androidx.room.Room
 import com.celinski.weatherapp.data.repository.AppDatabase
 import dagger.Module
@@ -12,7 +11,7 @@ import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
 
 @HiltAndroidApp
-class WeatherApp: Application()
+class WeatherApp : Application()
 
 @Module
 @InstallIn(SingletonComponent::class)
