@@ -10,6 +10,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.time.LocalDateTime
 import javax.inject.Inject
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
@@ -56,7 +57,9 @@ class WeatherRepositoryImpl @Inject constructor(
         city: String
     ): List<WeatherMultipleModel> {
         cacheData.forEach { weatherItem ->
-            if (weatherItem.city != city
+            if (weatherItem.city != city || weatherItem.cacheTime.isBefore(
+                    LocalDateTime.now().minusHours(4)
+                )
             ) {
                 weatherDao.delete(weatherItem)
             }
