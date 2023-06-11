@@ -7,21 +7,32 @@ import androidx.activity.compose.setContent
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
+import androidx.compose.material.Button
+import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Text
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.celinski.weatherapp.R
+import com.celinski.weatherapp.data.repository.WeatherRepositoryImpl
 import com.celinski.weatherapp.frontend.ui.theme.DarkGreen
 import com.celinski.weatherapp.frontend.ui.theme.DeepGreen
 import com.celinski.weatherapp.frontend.ui.theme.WeatherAppTheme
@@ -55,9 +66,8 @@ class MainActivity : ComponentActivity() {
                         )
                         CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
                     } else if (viewModel.state.city == null) {
-                        // Wyświetl komunikat o oczekiwaniu na dane przez określony czas
                         Text(
-                            text = "Loading...",
+                            text = "We are unable to determine your location",
                             color = Color.White,
                             textAlign = TextAlign.Center,
                             modifier = Modifier.align(Alignment.Center)
@@ -70,12 +80,31 @@ class MainActivity : ComponentActivity() {
                             horizontalAlignment = Alignment.CenterHorizontally,
                             verticalArrangement = Arrangement.Center
                         ) {
-                            Text(
-                                text = "Hello in ${viewModel.state.city}!",
-                                fontSize = 40.sp,
-                                color = Color.White,
-                                textAlign = TextAlign.Center
-                            )
+                            Column(modifier = Modifier.fillMaxWidth()) {
+                                Button(
+                                    onClick = { viewModel.loadWeatherInfo() },
+                                    modifier = Modifier
+                                        .align(Alignment.End)
+                                        .padding(bottom = 2.dp)
+                                        .width(60.dp),
+                                    colors = ButtonDefaults.buttonColors(backgroundColor = DeepGreen)
+                                ) {
+                                    Row(verticalAlignment = Alignment.CenterVertically) {
+                                        Image(
+                                            painter = painterResource(R.drawable.ic_refresh),
+                                            contentDescription = "Refresh button",
+                                            modifier = Modifier.size(24.dp)
+                                        )
+                                    }
+                                }
+                                Text(
+                                    text = "Hello in ${viewModel.state.city}!",
+                                    fontSize = 40.sp,
+                                    color = Color.White,
+                                    textAlign = TextAlign.Center,
+                                    modifier = Modifier.align(Alignment.CenterHorizontally)
+                                )
+                            }
                             WeatherCard(state = viewModel.state, backgroundColor = DeepGreen)
                             Spacer(modifier = Modifier.height(16.dp))
                             WeatherForecast(state = viewModel.state)

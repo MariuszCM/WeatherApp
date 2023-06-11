@@ -46,7 +46,6 @@ class WeatherViewModel @Inject constructor(
                     }
                 }
             } ?: kotlin.run {
-                //TODO dodac komunikat
                 state = state.copy(isLoading = false, error = "")
             }
         }
