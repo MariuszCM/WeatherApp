@@ -6,9 +6,14 @@ import android.content.Context
 import android.content.pm.PackageManager
 import android.location.Location
 import android.location.LocationManager
+import android.os.Looper
 import androidx.core.content.ContextCompat
 import com.celinski.weatherapp.domain.gps.GpsTracker
 import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationAvailability
+import com.google.android.gms.location.LocationCallback
+import com.google.android.gms.location.LocationRequest
+import com.google.android.gms.location.LocationResult
 import kotlinx.coroutines.suspendCancellableCoroutine
 import javax.inject.Inject
 import kotlin.coroutines.resume
@@ -41,25 +46,33 @@ class GpsTrackerImpl @Inject constructor(
         // asynchroniczne wywołanie locationClient.lastLocation w celu pobrania ostatniej znanej lokalizacji urządzenia
         //za pomoca korutyny
         return suspendCancellableCoroutine { cont ->
-            locationClient.lastLocation.apply {
-                if (isComplete) {
-                    if (isSuccessful) {
-                        cont.resume(result)
-                    } else {
+            val locationRequest = LocationRequest.create().apply {
+                priority = LocationRequest.PRIORITY_HIGH_ACCURACY
+                interval = 1000 // aktualizacja co 1 sekundę (można dostosować)
+            }
+            val locationCallback = object : LocationCallback() {
+                override fun onLocationResult(locationResult: LocationResult) {
+                    locationResult.let {
+                        if (!cont.isCancelled) {
+                            cont.resume(it.lastLocation)
+                        }
+                        locationClient.removeLocationUpdates(this)
+                    }
+                }
+
+                override fun onLocationAvailability(locationAvailability: LocationAvailability) {
+                    if (!locationAvailability.isLocationAvailable) {
                         cont.resume(null)
                     }
-                    return@suspendCancellableCoroutine
                 }
-                //oczekiwanie na pobranie lokalizacji
-                addOnSuccessListener {
-                    cont.resume(it)
-                }
-                addOnFailureListener {
-                    cont.resume(null)
-                }
-                addOnCanceledListener {
-                    cont.cancel()
-                }
+            }
+            locationClient.requestLocationUpdates(
+                locationRequest,
+                locationCallback,
+                Looper.getMainLooper()
+            )
+            cont.invokeOnCancellation {
+                locationClient.removeLocationUpdates(locationCallback)
             }
         }
     }

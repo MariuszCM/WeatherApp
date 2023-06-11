@@ -39,35 +39,28 @@ class WeatherRepositoryImpl @Inject constructor(
         city: String
     ): WeatherMultipleModel = suspendCoroutine { continuation ->
         GlobalScope.launch(Dispatchers.IO) {
-            var cacheData = weatherDao.getAll()
-            cacheData.forEach { weatherItem ->
-                if (weatherItem.city != city
-                ) {
-                    weatherDao.delete(weatherItem)
-                }
-            }
-            cacheData = weatherDao.getAll()
-            if (cacheData.isEmpty()) {
+            val cacheData = weatherDao.getAll()
+            val updatedCacheData = cleanUpCache(cacheData, city)
+            if (updatedCacheData.isEmpty()) {
                 val apiResponse = api.getWeatherFromApi(lat = lat, long = long).toWeatherInfo(city)
                 weatherDao.insert(apiResponse)
                 continuation.resume(apiResponse)
             } else {
-                continuation.resume(cacheData[0])
+                continuation.resume(updatedCacheData[0])
             }
         }
     }
 
-    private suspend fun cleanUpCache(
+    private fun cleanUpCache(
         cacheData: List<WeatherMultipleModel>,
         city: String
-    ) {
+    ): List<WeatherMultipleModel> {
         cacheData.forEach { weatherItem ->
             if (weatherItem.city != city
             ) {
-                withContext(Dispatchers.IO) {
-                    weatherDao.delete(weatherItem)
-                }
+                weatherDao.delete(weatherItem)
             }
         }
+        return weatherDao.getAll()
     }
 }
