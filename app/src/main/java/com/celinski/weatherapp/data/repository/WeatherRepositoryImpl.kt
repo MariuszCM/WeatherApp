@@ -18,8 +18,7 @@ class WeatherRepositoryImpl @Inject constructor(
 ): WeatherRepository {
     override suspend fun getWeatherMultipleModel(lat: Double, long: Double, city: String): Helper<WeatherMultipleModel> {
         return try {
-            //TODO do zmiany nazwa
-            val weatherResponse = weatherMultipleModel(lat, long, city)
+            val weatherResponse = getWeatherDataFromRepo(lat, long, city)
 
             Helper.Success(data = weatherResponse)
         } catch (e: Exception) {
@@ -28,21 +27,35 @@ class WeatherRepositoryImpl @Inject constructor(
         }
     }
 
-    private suspend fun weatherMultipleModel(lat: Double, long: Double, city: String): WeatherMultipleModel {
+    private suspend fun getWeatherDataFromRepo(lat: Double, long: Double, city: String): WeatherMultipleModel {
         val cacheData = withContext(Dispatchers.IO) {
             weatherDao.getAll()
         }
-        cacheData.forEach{weatherItem ->
-            if (weatherItem.cacheTime.isBefore(LocalDateTime.now().minusHours(4)) || weatherItem.city != city) {
+        cleanUpCache(cacheData, city)
+        if (cacheData.isEmpty()) {
+            val apiResponse = api.getWeatherFromApi(lat = lat, long = long).toWeatherInfo(city)
+            withContext(Dispatchers.IO) {
+                weatherDao.insert(apiResponse)
+            }
+            return apiResponse
+        } else {
+            return cacheData[0]
+        }
+    }
+
+    private suspend fun cleanUpCache(
+        cacheData: List<WeatherMultipleModel>,
+        city: String
+    ) {
+        cacheData.forEach { weatherItem ->
+            if (weatherItem.cacheTime.isBefore(
+                    LocalDateTime.now().minusHours(4)
+                ) || weatherItem.city != city
+            ) {
                 withContext(Dispatchers.IO) {
                     weatherDao.delete(weatherItem)
                 }
             }
-        }
-        return if (cacheData.isEmpty()) {
-            api.getWeatherFromApi(lat = lat, long = long).toWeatherInfo(city)
-        } else {
-            cacheData[0]
         }
     }
 }

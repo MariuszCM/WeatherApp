@@ -20,7 +20,7 @@ object AppModule {
     @Provides
     @Singleton
     fun provideAppDatabase(application: Application): AppDatabase {
-        return Room.databaseBuilder(application, AppDatabase::class.java, "my-database").fallbackToDestructiveMigration().build()
+        return Room.databaseBuilder(application, AppDatabase::class.java, "my-database").build()
     }
 
 }
