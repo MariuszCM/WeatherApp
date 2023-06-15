@@ -27,17 +27,6 @@ class WeatherModelMapConverter {
         return gson.fromJson(value, type)
     }
 
-    @TypeConverter
-    fun fromListWeatherModel(value: List<WeatherModel>): String {
-        return gson.toJson(value)
-    }
-
-    @TypeConverter
-    fun toListWeatherModel(value: String): List<WeatherModel> {
-        val type: Type = object : TypeToken<List<WeatherModel>>() {}.type
-        return gson.fromJson(value, type)
-    }
-
     private class WeatherTypeInstanceCreator : InstanceCreator<WeatherType> {
         override fun createInstance(type: Type?): WeatherType {
             return WeatherType.ClearSky

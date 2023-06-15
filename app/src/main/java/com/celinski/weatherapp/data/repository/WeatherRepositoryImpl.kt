@@ -9,7 +9,6 @@ import com.celinski.weatherapp.domain.util.Helper
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import java.time.LocalDateTime
 import javax.inject.Inject
 import kotlin.coroutines.resume

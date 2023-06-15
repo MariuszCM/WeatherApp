@@ -9,19 +9,6 @@ import com.google.gson.InstanceCreator
 import java.lang.reflect.Type
 
 class WeatherModelConverter {
-//    @TypeConverter
-//    fun fromWeatherModel(value: WeatherModel): String {
-//        val gson = Gson()
-//        return gson.toJson(value)
-//    }
-//
-//    @TypeConverter
-//    fun toWeatherModel(value: String): WeatherModel {
-//        val gson = Gson()
-//        val type = object : TypeToken<WeatherModel>() {}.type
-//        return gson.fromJson(value, type)
-//    }
-
     private val gson: Gson = GsonBuilder()
         .registerTypeAdapter(WeatherType::class.java, WeatherTypeInstanceCreator())
         .create()
